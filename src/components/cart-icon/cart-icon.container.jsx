@@ -1,21 +1,11 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
-import { Mutation, Query, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
 
 import CartIcon from './cart-icon.component';
 
-const TOGGLE_CART_HIDDEN = gql`
-   mutation ToggleCartHidden {
-      toggleCartHidden @client
-   }
-`;
-
-const GET_CART_QUANTITY = gql`
-   {
-      cartQuantity @client
-   }
-`;
+import { GET_CART_QUANTITY } from './../../graphql/queries';
+import { TOGGLE_CART_HIDDEN } from './../../graphql/mutations';
 
 const CartIconContainer = ({ data: { cartQuantity }, toggleCartHidden }) => (
    <CartIcon toggleCartHidden={toggleCartHidden} itemCount={cartQuantity} />

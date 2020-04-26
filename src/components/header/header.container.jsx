@@ -1,19 +1,17 @@
 import React from 'react';
-import { gql } from 'apollo-boost';
-import { Query } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import { flowRight as compose } from 'lodash';
 
 import Header from './header.component';
 
-const GET_CART_HIDDEN = gql`
-   {
-      cartHidden @client
-   }
-`;
+import { GET_CART_HIDDEN, GET_CURRENT_USER } from './../../graphql/queries';
 
-const HeaderContainer = () => (
-   <Query query={GET_CART_HIDDEN}>
-      {({ data: { cartHidden } }) => <Header hidden={cartHidden} />}
-   </Query>
-);
+const HeaderContainer = ({
+   cartHiddenData: { cartHidden },
+   currentUserData: { currentUser },
+}) => <Header hidden={cartHidden} currentUser={currentUser} />;
 
-export default HeaderContainer;
+export default compose(
+   graphql(GET_CART_HIDDEN, { name: 'cartHiddenData' }),
+   graphql(GET_CURRENT_USER, { name: 'currentUserData' })
+)(HeaderContainer);

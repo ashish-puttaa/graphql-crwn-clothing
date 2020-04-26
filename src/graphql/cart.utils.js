@@ -38,3 +38,13 @@ export const getCartQuantity = (cartItems) =>
          accumalatedQuantity + cartItem.quantity,
       0
    );
+
+export const getCartTotal = (cartItems) =>
+   cartItems.reduce(
+      (accumalatedQuantity, cartItem) =>
+         accumalatedQuantity + cartItem.quantity * cartItem.price,
+      0
+   );
+
+export const clearItemFromCart = (cartItems, cartItemToClear) =>
+   cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
